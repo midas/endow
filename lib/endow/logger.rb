@@ -1,9 +1,6 @@
 module Endow
   class Logger
 
-    #class_attribute :logger
-    #self.logger = nil
-
     def self.log_connection( service, attempt )
       log "#{green_prefix} #{service.class.name} (Attempt #{attempt})"
     end
