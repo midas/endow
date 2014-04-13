@@ -146,13 +146,25 @@ module Endow
     def content_type_name
       content_type.blank? ?
         :no_content_type_specified :
-        content_type.split( '/' ).join( '_' )
+        determine_content_type_name
+    end
+
+    # Override for custom MIMEs, etc
+    #
+    def determine_content_type_name
+      content_type.split( '/' ).join( '_' )
     end
 
     def accept_name
       accept.blank? ?
         :no_accept_specified :
-        accept.split( '/' ).join( '_' )
+        determine_accept_name
+    end
+
+    # Override for custom MIMEs, etc
+    #
+    def determine_accept_name
+      accept.split( '/' ).join( '_' )
     end
 
     def default_headers
