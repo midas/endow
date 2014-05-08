@@ -23,13 +23,21 @@ module Endow
           attempt += 1
           log_connection( self, attempt )
 
-          if success_error_codes.include?( response.code )
+          if success?
             handle_successful_response
           else
             _handle_unsuccessful_response
           end
         end
       end
+    end
+
+    def success?
+      success_error_codes.include?( response.code )
+    end
+
+    def failure?
+      !success?
     end
 
     def request_url
