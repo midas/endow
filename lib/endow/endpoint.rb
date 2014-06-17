@@ -111,12 +111,12 @@ module Endow
     def _handle_unsuccessful_response
       custom_handler_method = "handle_unsuccessful_response_#{response.code}"
 
-      unless respond_to?( custom_handler_method )
+      unless respond_to?( custom_handler_method, true )
         handle_unsuccessful_response
         return
       end
 
-      send( custom_handler_method )
+      send( custom_handler_method, response )
     end
 
     def set_content( content )
