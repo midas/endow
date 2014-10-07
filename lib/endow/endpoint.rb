@@ -119,6 +119,17 @@ module Endow
       send( custom_handler_method, response )
     end
 
+    def set_uri_content( attributes )
+      self.class_eval do
+        define_method :endpoint do
+          endpoint_template.gsub( /(:\w+)/ ) do |match|
+            attributes[match[1..-1].to_sym]
+          end
+        end
+        protected :endpoint
+      end
+    end
+
     def set_content( content )
       send "set_content_as_#{content_type_name}", content
     end
@@ -231,7 +242,11 @@ module Endow
     end
 
     def endpoint
-      raise NotImplementedError
+      raise NotImplementedError, "You must implement #{self.class.name}#endpoint"
+    end
+
+    def endpoint_template
+      raise NotImplementedError, "You must implement #{self.class.name}#endpoint_template if you call #set_uri_content"
     end
 
     def authentication_token_key
