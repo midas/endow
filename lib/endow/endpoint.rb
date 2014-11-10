@@ -78,6 +78,15 @@ module Endow
       end
     end
 
+    def set_ssl_client_side_authentication( auth )
+      request.auth.ssl.cert_key_file     = auth[:ssl_cert_key_file]
+      request.auth.ssl.cert_key_password = auth[:ssl_cert_key_password]
+      request.auth.ssl.cert_file         = auth[:ssl_cert_file]
+      request.auth.ssl.ca_cert_file      = auth[:ssl_ca_cert_file]
+      request.auth.ssl.verify_mode       = auth[:ssl_verify_mode]
+      request.auth.ssl.ssl_version       = auth[:ssl_version]
+    end
+
     def request_params
       {
         url: url,
