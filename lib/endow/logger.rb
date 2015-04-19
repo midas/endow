@@ -1,8 +1,8 @@
 module Endow
   class Logger
 
-    def self.log_connection( service, attempt )
-      log "#{green_prefix} #{service.class.name} (Attempt #{attempt})"
+    def self.log_connection( service, attempt, attempts=nil )
+      log "#{green_prefix} #{service.class.name} (#{attempts_segment attempt, attempts}) #{service_options service}"
     end
 
     def self.log_graceful_error( msg )
@@ -27,6 +27,18 @@ module Endow
     def self.red_prefix
       #TODO change to another ANSI library
       "#{indention}[#{ANSI.red { error_label }}]"
+    end
+
+    def self.service_options( service )
+      service.respond_to?( :options_for_log ) ?
+        "with #{service.options_for_log.inspect}" :
+        nil
+    end
+
+    def self.attempts_segment( attempt, attempts )
+      attempts.blank? ?
+        "Attempt #{attempt}" :
+        "Attempt #{attempt} of #{attempts}"
     end
 
     def self.label
