@@ -164,6 +164,8 @@ module Endow
     end
 
     def decode_body_as_application_json( content )
+      return {} if content.nil? || content.empty?
+
       MultiJson.load( content )
     end
 
